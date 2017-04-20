@@ -10,7 +10,11 @@ params ['_list', '_selection'];
     _x setVariable ['Epoch_TT_MysterySelection', _fate];
 
     _length = count _fate;
-    if (_fate select (_length- 1) == Epoch_TT_MysteryCombination select (_length - 1)) then {
+    _selectedIndex = _length - 1;
+    _selectedFate = _fate param [_selectedIndex, -1];
+    _selectedCombination = Epoch_TT_MysteryCombination param [_selectedIndex, -1];
+
+    if (_selectedFate isEqualTo _selectedCombination) then {
 
         if (count _fate >= 3) then {
 
@@ -29,7 +33,7 @@ params ['_list', '_selection'];
     } else {
 
         // Reset player's combo either way
-        _x setVariable ['Epoch_TT_MysterySelection', []];
+        _x setVariable ['Epoch_TT_MysterySelection',  []];
 
         // Return player to start
         _x setPos Epoch_TT_MysteryStartMarker;
