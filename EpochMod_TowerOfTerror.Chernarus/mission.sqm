@@ -8,7 +8,7 @@ class EditorData
 	toggles=10;
 	class ItemIDProvider
 	{
-		nextID=2178;
+		nextID=2180;
 	};
 	class MarkerIDProvider
 	{
@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={3740.1108,414.05453,6021.0381};
-		dir[]={-0.65067929,-0.28812152,-0.70275432};
-		up[]={-0.19579676,0.95762742,-0.21147697};
-		aside[]={-0.73380601,4.3773616e-006,0.67939979};
+		pos[]={3737.1497,410.80377,6016.6982};
+		dir[]={-0.94362473,-0.31496218,-0.10310782};
+		up[]={-0.31317225,0.94914043,-0.034226414};
+		aside[]={-0.10864694,3.7647842e-006,0.99411088};
 	};
 };
 binarizationWanted=0;
@@ -8399,7 +8399,7 @@ class Mission
 		{
 			dataType="Trigger";
 			position[]={3726.8779,436.85306,5994.2271};
-			angle=0.24753937;
+			angle=0.24753934;
 			class Attributes
 			{
 				onActivation="_null = [thisList, Epoch_TT_TriggerableDoor1, 1] call Epoch_TT_TriggerDoor;";
@@ -28606,10 +28606,34 @@ class Mission
 			class Attributes
 			{
 				init="this addAction ['[1] Barrel Run', { player setPos (Epoch_TT_Marker1 modelToWorld [0,0,0.5]); }]; this addAction ['[2] Box of Mystery', { player setPos (Epoch_TT_Marker2 modelToWorld [0,0,0.5]); }]; this addAction ['[3] Wall Traps', { player setPos (Epoch_TT_Marker3 modelToWorld [0,0,0.5]); }];  this addAction ['[4] Launcher Traps', { player setPos (Epoch_TT_Marker4 modelToWorld [0,0,0.5]); }]; this addAction ['[5] Hard Barrel Run', { player setPos (Epoch_TT_Marker5 modelToWorld [0,0,0.5]); }]; this addAction ['[6] Parachute Drop', { player setPos (Epoch_TT_Marker6 modelToWorld [0,0,0.5]); }];";
+				disableSimulation=1;
 			};
 			id=2173;
 			type="Computer";
 			atlOffset=0.67633057;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="allowDamage";
+					expression="_this allowdamage _value;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"BOOL"
+								};
+							};
+							value=0;
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item746
 		{
