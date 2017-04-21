@@ -25,91 +25,6 @@ if (_timeout > 0 && count _targets == 0) exitWith {
     _object setVariable ['Epoch_TT_Timeout', time - _timeout];
 };
 
-if (_action == "Lightning") exitWith {
-
-    // Set timeout texture
-    _object setObjectTextureGlobal [0, "Epoch_TT\images\timeout_low.paa"];
-
-    // Warning sound
-    playSound3D["a3\sounds_f\sfx\alarmCar.wss", _object];
-
-    [(selectRandom _targets), _timeout, _object] spawn {
-
-        // Spawn actual lightning after the warning
-        Sleep 2;
-        [(_this select 0), true] call Epoch_TT_SpawnLightning;
-
-        // Reset texture after duration
-        Sleep (_this select 1);
-        (_this select 2) setObjectTextureGlobal [0, "Epoch_TT\images\lightning.paa"];
-
-    };
-
-};
-
-
-if (_action == "Launcher") exitWith {
-
-    // Set timeout texture
-    _object setObjectTextureGlobal [0, "Epoch_TT\images\timeout_low.paa"];
-
-    // Warning sound
-    playSound3D["a3\sounds_f\sfx\alarm.wss", _object];
-
-    _null = [_object, _timeout] spawn {
-        Sleep (_this select 1);
-        (_this select 0) setObjectTextureGlobal [0, "Epoch_TT\images\launch.paa"];
-    };
-
-    _null = [_object, _timeout] spawn {
-
-        Sleep 0.25;
-
-        _towersToLaunch = +Epoch_TT_LaunchableTowers;
-
-        for "_i" from 0 to (count Epoch_TT_LaunchableTowers) - 1 step 1 do {
-
-            _tower = selectRandom _towersToLaunch;
-
-            _object = (_tower select 0);
-            _object enableSimulationGlobal true;
-            _object setVelocity [0,0,80];
-
-            playSound3D [Epoch_TT_AirLaunchSound, _object];
-
-            Sleep 0.3;
-
-            _towersToLaunch deleteAt (_towersToLaunch find _tower);
-        };
-
-        /*{
-            _object = (_x select 0);
-            _object enableSimulationGlobal true;
-            _object setVelocity (((_x select 2) select 1) vectorMultiply 25);
-
-            playSound3D [Epoch_TT_AirLaunchSound, _object];
-
-            Sleep 0.2;
-            false
-        } count Epoch_TT_LaunchableTowers > 0;*/
-
-        Sleep 10;
-
-        {
-            _object = (_x select 0);
-            _object setPosWorld (_x select 1);
-            _object setVectorDirAndUp (_x select 2);
-            _object enableSimulationGlobal false;
-            false
-        } count Epoch_TT_LaunchableTowers > 0;
-
-    };
-
-
-
-};
-
-
 if (_action == "Hatchet") exitWith {
 
     {
@@ -131,5 +46,87 @@ if (_action == "Hatchet") exitWith {
         };
         false
     } count _targets > 0;
+
+};
+
+
+if (_action == "Lightning") exitWith {
+
+    // Dont initiate with no targets
+    if (count _targets == 0) exitWith {};
+
+    // Set timeout texture
+    _object setObjectTextureGlobal [0, "Epoch_TT\images\timeout_red.paa"];
+
+    // Warning sound
+    playSound3D["a3\sounds_f\sfx\alarmCar.wss", _object];
+
+    [_timeout, _object] spawn {
+        // Reset texture after duration
+        Sleep (_this select 0);
+        (_this select 1) setObjectTextureGlobal [0, "Epoch_TT\images\lightning.paa"];
+    };
+
+    [(selectRandom _targets), _timeout, _object] spawn {
+
+        // Spawn actual lightning after the warning
+        Sleep 2;
+        [(_this select 0), true] call Epoch_TT_SpawnLightning;
+
+    };
+
+};
+
+
+if (_action == "Launcher") exitWith {
+
+    // Dont initiate with no targets
+    if (count _targets == 0) exitWith {};
+
+    // Set timeout texture
+    _object setObjectTextureGlobal [0, "Epoch_TT\images\timeout_red.paa"];
+
+    // Warning sound
+    playSound3D["a3\sounds_f\sfx\alarm.wss", _object];
+
+    _null = [_object, _timeout] spawn {
+        Sleep (_this select 1);
+        (_this select 0) setObjectTextureGlobal [0, "Epoch_TT\images\launch.paa"];
+    };
+
+    _null = [_object, _timeout] spawn {
+
+        Sleep 0.25;
+
+        _towersToLaunch = +Epoch_TT_LaunchableTowers;
+
+        for "_i" from 0 to (count Epoch_TT_LaunchableTowers) - 1 step 1 do {
+
+            _tower = selectRandom _towersToLaunch;
+
+            _object = (_tower select 0);
+            _object enableSimulationGlobal true;
+            _object setVelocity [0,0,70];
+
+            playSound3D [Epoch_TT_AirLaunchSound, _object];
+
+            Sleep 0.3;
+
+            _towersToLaunch deleteAt (_towersToLaunch find _tower);
+        };
+
+        Sleep 10;
+
+        {
+            _object = (_x select 0);
+            _object setPosWorld (_x select 1);
+            _object setVectorDirAndUp (_x select 2);
+            _object enableSimulationGlobal false;
+            false
+        } count Epoch_TT_LaunchableTowers > 0;
+
+    };
+
+
 
 };

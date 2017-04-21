@@ -24,5 +24,14 @@ if (isNil "Epoch_TT_Initialized") exitWith {};
         };
     };
 
+    // Add teleport menu to object (if we are an admin)
+    _adminCheckComplete = _player getVariable ['Epoch_TT_AdminCheckComplete', false];
+    if (!_adminCheckComplete && !isNil "EPOCH_server_isPAdmin") then {
+         _player setVariable ['Epoch_TT_AdminCheckComplete', true];         
+        if !(_player call EPOCH_server_isPAdmin) exitWith {};
+        remoteExec ['Epoch_TT_LocalTeleportActions', _player];            
+    };
+
+
     false
 } count _this > 0;
