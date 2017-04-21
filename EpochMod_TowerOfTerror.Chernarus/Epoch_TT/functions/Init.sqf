@@ -24,6 +24,19 @@ Epoch_TT_LocalPlaySound = {
     player say _this;
 };
 
+Epoch_TT_LocalTeleportActions = {
+
+    removeAllActions Epoch_TT_TeleportMenuObject;
+    Epoch_TT_TeleportMenuObject addAction ['[1] Barrel Run', { player setPos (Epoch_TT_Marker1 modelToWorld [0,0,0.5]); }]; 
+    Epoch_TT_TeleportMenuObject addAction ['[2] Box of Mystery', { player setPos (Epoch_TT_Marker2 modelToWorld [0,0,0.5]); }]; 
+    Epoch_TT_TeleportMenuObject addAction ['[3] Wall Traps', { player setPos (Epoch_TT_Marker3 modelToWorld [0,0,0.5]); }]; 
+    Epoch_TT_TeleportMenuObject addAction ['[4] Launcher Traps', { player setPos (Epoch_TT_Marker4 modelToWorld [0,0,0.5]); }]; 
+    Epoch_TT_TeleportMenuObject addAction ['[5] Hard Barrel Run', { player setPos (Epoch_TT_Marker5 modelToWorld [0,0,0.5]); }]; 
+    Epoch_TT_TeleportMenuObject addAction ['[6] Parachute Drop', { player setPos (Epoch_TT_Marker6 modelToWorld [0,0,0.5]); }];
+
+};
+
+
 if (!isServer) exitWith {};
 
 //
@@ -54,16 +67,7 @@ Epoch_TT_AirCompleteSound = _soundPath + "Epoch_TT\sound\AirComplete.ogg";
 //
 
 // Generate a random combination on init
-Epoch_TT_GenerateMysteryCombination = {
-
-    Epoch_TT_MysteryCombination =
-    [
-        round random 2,
-        round random 2,
-        round random 2
-    ];
-};
-call Epoch_TT_GenerateMysteryCombination;
+Epoch_TT_MysteryCombination = [0,1,2];
 
 Epoch_TT_MysteryMarkers = [[0,0,0], [0,0,0]];
 Epoch_TT_MysteryCompleteMarker = [0,0,0];
@@ -100,6 +104,7 @@ Epoch_TT_LauncherZone = [];
     ,'SetFate'
     ,'TriggerDoor'
     ,'WallDrop'
+    ,'TeleportActions'
 ];
 
 _null = [] spawn {
@@ -108,6 +113,14 @@ _null = [] spawn {
     waitUntil {
         time > 0
     };
+
+    // Random combination
+    Epoch_TT_MysteryCombination =
+    [
+        round random 2,
+        round random 2,
+        round random 2
+    ];
 
     // Droppable walls
     Epoch_TT_DroppableWalls = [
