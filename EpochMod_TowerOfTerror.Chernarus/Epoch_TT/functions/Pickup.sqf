@@ -4,17 +4,15 @@ if (isNil "Epoch_TT_Initialized") exitWith {};
 
 params [['_action', 'none'], ['_targets', []], ['_object', objNull], ['_timeout', 0]];
 
-
-_timeout = 5;
+// Testing
+// _timeout = 5;
 
 if (_action == "none") exitWith {};
 if (isNull _object) exitWith {};
 
-
 _currentTimeout = _object getVariable ['Epoch_TT_Timeout', time - _timeout];
 if (time - _currentTimeout < _timeout) exitWith {};
 _object setVariable ['Epoch_TT_Timeout', time + _timeout];
-
 
 // "a3\sounds_f\weapons\flare_gun\flaregun_1.wss"
 // a3\sounds_f\weapons\reloads\kohoutek1.wss
@@ -30,7 +28,7 @@ if (_timeout > 0 && count _targets == 0) exitWith {
 if (_action == "Lightning") exitWith {
 
     // Set timeout texture
-    _object setObjectTextureGlobal [0, "Epoch_TT\images\timeout.paa"];
+    _object setObjectTextureGlobal [0, "Epoch_TT\images\timeout_low.paa"];
 
     // Warning sound
     playSound3D["a3\sounds_f\sfx\alarmCar.wss", _object];
@@ -53,7 +51,7 @@ if (_action == "Lightning") exitWith {
 if (_action == "Launcher") exitWith {
 
     // Set timeout texture
-    _object setObjectTextureGlobal [0, "Epoch_TT\images\timeout.paa"];
+    _object setObjectTextureGlobal [0, "Epoch_TT\images\timeout_low.paa"];
 
     // Warning sound
     playSound3D["a3\sounds_f\sfx\alarm.wss", _object];
