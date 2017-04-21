@@ -11,7 +11,7 @@ _group = createGroup _center;
 _lightning = _group createUnit ["ModuleLightning_F", _target ,[],0,""];
 
 if (_kill) then {
-    _x setDammage 1;
+    _target setDammage 1;
     /*_x setUnconscious true;
     _x spawn {
         Sleep 2;

@@ -37,7 +37,7 @@ if (_action == "Lightning") exitWith {
 
         // Spawn actual lightning after the warning
         Sleep 2;
-        [(_this select 0), false] call Epoch_TT_SpawnLightning;
+        [(_this select 0), true] call Epoch_TT_SpawnLightning;
 
         // Reset texture after duration
         Sleep (_this select 1);
